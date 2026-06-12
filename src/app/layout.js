@@ -41,7 +41,6 @@ export default function RootLayout({ children }) {
           </footer>
 
         </FavoritesProvider>
-
       </body>
     </html>
   );
