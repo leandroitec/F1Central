@@ -1,11 +1,53 @@
-import Link from 'next/link';
-import React from 'react';
-import { infoPilotos } from '@/data/informacion';
+import Link from "next/link";
+import FavoriteButton from "@/app/componentes/FavoriteButton";
 
-export default function PilotosPage() { 
+export default async function PilotosPage() {
+  let pilotos = [];
+  let errorAPI = false;
 
-  // Convertimos el objeto en un array para poder usar .map() (full IA)
-  const listaPilotos = Object.entries(infoPilotos);
+  try {
+    const res = await fetch(
+      "https://api.openf1.org/v1/drivers?session_key=latest",
+      {
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) throw new Error("Error en la respuesta de la API");
+
+    const dataCruda = await res.json();
+
+    // Filtramos para guardar en memoria los datos requeridos + la foto oficial
+    pilotos = dataCruda.map((p) => ({
+      full_name: p.full_name,
+      driver_number: p.driver_number,
+      team_name: p.team_name,
+      photo: p.headshot_url, 
+    }));
+
+    // Elimina duplicados por número de piloto
+    pilotos = pilotos.filter(
+      (piloto, index, self) =>
+        index ===
+        self.findIndex(
+          (p) => p.driver_number === piloto.driver_number
+        )
+    );
+
+  } catch (error) {
+    console.error("Error cargando OpenF1:", error);
+    errorAPI = true;
+  }
+
+  if (errorAPI) {
+    return (
+      <div className="p-10 text-center text-zinc-400 min-h-screen bg-black">
+        <p>
+          ⚠️ No pudimos conectar con OpenF1. Intentá nuevamente más tarde.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="p-10 bg-black min-h-screen">
@@ -13,34 +55,51 @@ export default function PilotosPage() {
         <h1 className="text-5xl font-black italic text-white uppercase tracking-tighter">
           Grilla de <span className="text-red-600">Pilotos</span>
         </h1>
-        <p className="text-zinc-500 mt-2">Temporada Oficial 2026</p>
+
+        <p className="text-zinc-500 mt-2">
+          Datos consumidos desde OpenF1
+        </p>
       </header>
 
-      <div className="grid gap-6">
-        {/* ENLACES A SECCIONES */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Link href="/pilotos/leyendas">
-            <div className="bg-zinc-800 p-6 rounded-lg border-2 border-dashed border-zinc-700 hover:border-red-600 transition-all group">
-              <h2 className="text-xl font-bold text-white group-hover:text-red-600 italic">
-                🏆 Ver Leyendas Históricas &rarr;
-              </h2>
-            </div>
-          </Link>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {pilotos.map((piloto) => {
 
-        {/* LISTADO DINAMICO */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-          {listaPilotos.map(([id, p]) => (
-            <Link key={id} href={`/pilotos/${id}`}>
-              <div className="bg-zinc-900 p-6 rounded-md border-l-4 border-red-600 hover:bg-zinc-800 transition-colors cursor-pointer h-full">
-                <span className="text-4xl font-black text-zinc-800 block mb-2">{p.nro} </span>
-                <h3 className="text-lg font-bold text-white uppercase">{p.nombre}</h3>
-                <p className="text-zinc-500 text-sm">{p.equipo}</p>
-                <p className="text-red-600 text-xs font-bold mt-4 underline">VER FICHA &rarr;</p>
+          const slug = piloto.full_name
+            .toLowerCase()
+            .replaceAll(" ", "-");
+
+          return (
+            <div
+              key={piloto.driver_number}
+              className="bg-zinc-900 p-6 rounded border-l-4 border-red-600 flex flex-col justify-between"
+            >
+              <div>
+                <span className="text-sm font-mono text-zinc-500 block mb-1">
+                  #{piloto.driver_number}
+                </span>
+
+                <h3 className="text-xl font-bold text-white uppercase">
+                  {piloto.full_name}
+                </h3>
+
+                <p className="text-red-600 text-xs font-bold uppercase mt-1">
+                  {piloto.team_name}
+                </p>
               </div>
-            </Link>
-          ))}
-        </div>
+
+              <div className="flex justify-between items-center mt-8">
+                <Link
+                  href={`/pilotos/${slug}`}
+                  className="text-zinc-400 text-xs font-bold underline hover:text-white transition-colors"
+                >
+                  VER PERFIL ⮑
+                </Link>
+
+                <FavoriteButton pilotId={slug} />
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

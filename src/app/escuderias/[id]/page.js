@@ -20,11 +20,12 @@ export default async function EscuderiaDetalle({ params }) {
   }
   // todo lo siguiente para conseguir que dos pilotos sean del mismo equipo
   // filtramos los pilotos comparando strings en minúsculas para evitar errores
-  const pilotosDelEquipo = Object.entries(infoPilotos).filter(([pilotId, p]) => {
+const pilotosDelEquipo = Object.entries(infoPilotos).filter(([pilotId, p]) => {
     const nombreEscuderia = escuderia.nombre.toLowerCase();
-    const equipoPiloto = p.equipo.toLowerCase();
     
-    // Retorna true si (ej: "Ferrari" está en "Scuderia Ferrari")
+    // Si el piloto no tiene equipo, usamos un string vacío para que no rompa el .toLowerCase()
+    const equipoPiloto = p.equipo ? p.equipo.toLowerCase() : "";
+    
     return nombreEscuderia.includes(equipoPiloto) || equipoPiloto.includes(nombreEscuderia);
   });
 
@@ -32,7 +33,7 @@ export default async function EscuderiaDetalle({ params }) {
     <div className="p-8 md:p-20 bg-zinc-950 min-h-screen text-white font-sans">
       
       <Link href="/escuderias" className="group flex items-center gap-2 text-zinc-500 hover:text-white mb-12 transition-colors uppercase text-xs font-bold tracking-widest">
-        <span className="group-hover:-translate-x-1 transition-transform">&larr;</span> 
+        <span className="group-hover:-translate-x-1 transition-transform">⮐</span> 
         Volver a Constructores
       </Link>
 
@@ -72,8 +73,8 @@ export default async function EscuderiaDetalle({ params }) {
                           <span className="bg-red-600 text-[10px] px-2 py-1 font-bold italic uppercase">Pro</span>
                         </div>
                         <h3 className="text-2xl font-black uppercase group-hover:text-red-600 transition-colors">{p.nombre}</h3>
-                        <p className="text-zinc-500 text-xs font-bold uppercase mt-1 tracking-widest">{p.pais}</p>
-                        <p className="text-white text-[10px] font-bold mt-6 opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest">Ver Perfil &rarr;</p>
+                        <p className="text-zinc-500 text-xs font-bold uppercase mt-1 tracking-widest">{p.country}</p>
+                        <p className="text-white text-[10px] font-bold mt-6 opacity-0 group-hover:opacity-100 transition-opacity uppercase tracking-widest">Ver Perfil ⮑</p>
                       </div>
                     </Link>
                   ))
