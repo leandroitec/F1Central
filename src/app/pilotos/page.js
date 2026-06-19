@@ -1,5 +1,4 @@
-import Link from "next/link";
-import FavoriteButton from "@/app/componentes/FavoriteButton";
+import PilotCard from "@/app/componentes/PilotCard";
 
 export default async function PilotosPage() {
   let pilotos = [];
@@ -63,41 +62,14 @@ export default async function PilotosPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {pilotos.map((piloto) => {
-
-          const slug = piloto.full_name
-            .toLowerCase()
-            .replaceAll(" ", "-");
+          const slug = piloto.full_name.toLowerCase().replaceAll(" ", "-");
 
           return (
-            <div
+            <PilotCard
               key={piloto.driver_number}
-              className="bg-zinc-900 p-6 rounded border-l-4 border-red-600 flex flex-col justify-between"
-            >
-              <div>
-                <span className="text-sm font-mono text-zinc-500 block mb-1">
-                  #{piloto.driver_number}
-                </span>
-
-                <h3 className="text-xl font-bold text-white uppercase">
-                  {piloto.full_name}
-                </h3>
-
-                <p className="text-red-600 text-xs font-bold uppercase mt-1">
-                  {piloto.team_name}
-                </p>
-              </div>
-
-              <div className="flex justify-between items-center mt-8">
-                <Link
-                  href={`/pilotos/${slug}`}
-                  className="text-zinc-400 text-xs font-bold underline hover:text-white transition-colors"
-                >
-                  VER PERFIL ⮑
-                </Link>
-
-                <FavoriteButton pilotId={slug} />
-              </div>
-            </div>
+              piloto={piloto}
+              slug={slug}
+            />
           );
         })}
       </div>
