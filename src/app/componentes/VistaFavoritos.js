@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useContext } from "react";
-import { FavoritesContext } from "@/app/favorites/FavoritesContext";
+import { FavoritesContext } from "@/context/FavoritesContext";
 import PilotCard from "@/app/componentes/PilotCard";
 import Link from "next/link";
 

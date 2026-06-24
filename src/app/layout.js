@@ -1,6 +1,6 @@
 import Link from "next/link";
 import "./globals.css";
-import { FavoritesProvider } from "@/app/favorites/FavoritesContext";
+import { FavoritesProvider } from "@/context/FavoritesContext";
 import FavoriteCounter from "@/app/componentes/FavoriteCounter";
 
 export default function RootLayout({ children }) {

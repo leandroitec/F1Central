@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useContext } from 'react';
-import { FavoritesContext } from '@/app/favorites/FavoritesContext';
+import { FavoritesContext } from '@/context/FavoritesContext';
 
 export default function FavoriteButton({ pilotId }) {
   const { favorites, toggleFavorite } = useContext(FavoritesContext);
