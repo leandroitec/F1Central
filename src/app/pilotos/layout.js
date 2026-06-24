@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function PilotosLayout({ children }) {
   return (
     <div className="flex flex-col md:flex-row min-h-screen">
@@ -10,6 +12,17 @@ export default function PilotosLayout({ children }) {
           <li className="text-zinc-400 hover:text-white cursor-pointer transition-colors">Temporada 2026</li>
           <li className="text-zinc-400 hover:text-white cursor-pointer transition-colors">Superlicencia</li>
           <li className="text-zinc-400 hover:text-white cursor-pointer transition-colors">Transferencias</li>
+
+          {/* --- agregue enlance para Dream Team --- */}
+          <li className="border-t border-zinc-800 pt-4">
+            <Link 
+              href="/favoritos" 
+              className="text-amber-500 hover:text-amber-400 transition-colors flex items-center gap-2"
+            >
+              ⭐ Mi Dream Team
+            </Link>
+          </li>
+
         </ul>
       </aside>
 

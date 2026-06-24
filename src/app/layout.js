@@ -1,6 +1,7 @@
 import Link from "next/link";
 import "./globals.css";
-import { FavoritesProvider } from "@/app/favorites/FavoritesContext";
+import { FavoritesProvider } from "@/context/FavoritesContext";
+import FavoriteCounter from "@/app/componentes/FavoriteCounter";
 
 export default function RootLayout({ children }) {
   return (
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
                 <Link href="/" className="hover:text-red-600 transition-colors">Home</Link>
                 <Link href="/pilotos" className="hover:text-red-600 transition-colors">Pilotos</Link>
                 <Link href="/escuderias" className="hover:text-red-600 transition-colors">Escuderías</Link>
+                <FavoriteCounter />
               </div>
             </div>
           </nav>

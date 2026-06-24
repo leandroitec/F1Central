@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { infoPilotos } from "@/data/informacion";
+import FavoriteButton from "@/app/componentes/FavoriteButton";
 
 export default async function PilotoDetalle({ params }) {
 
@@ -76,6 +77,9 @@ export default async function PilotoDetalle({ params }) {
         <h1 className="text-5xl md:text-7xl font-black italic uppercase tracking-tighter">
           {pilotoAPI.full_name}
         </h1>
+        <div className="mt-4">
+          <FavoriteButton pilotId={slug} />
+        </div>
       </header>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
