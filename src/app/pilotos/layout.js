@@ -9,11 +9,42 @@ export default function PilotosLayout({ children }) {
           Sección Pilotos
         </h3>
         <ul className="space-y-4 font-bold text-sm">
-          <li className="text-zinc-400 hover:text-white cursor-pointer transition-colors">Temporada 2026</li>
-          <li className="text-zinc-400 hover:text-white cursor-pointer transition-colors">Superlicencia</li>
-          <li className="text-zinc-400 hover:text-white cursor-pointer transition-colors">Transferencias</li>
+          
+          {/* Enlaces Externos Oficiales */}
+          <li>
+            <a 
+              href="https://www.fia.com/events/fia-formula-one-world-championship/season-2026/formula-one"
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-zinc-400 hover:text-white transition-colors block"
+            >
+              Temporada 2026
+            </a>
+          </li>
 
-          {/* --- agregue enlance para Dream Team --- */}
+          <li>
+            <a 
+              href="https://lat.motorsport.com/f1/news/puntos-penalizacion-formula-1-sanciones/6627725/"
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-zinc-400 hover:text-white transition-colors block"
+            >
+              Superlicencia
+            </a>
+          </li>
+
+          <li>
+            <a 
+              href="https://www.f1-fansite.com/es/tag/f1-rumours/"
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-zinc-400 hover:text-white transition-colors block"
+            >
+              Transferencias
+            </a>
+          </li>
+
+          {/* Enlace Interno para el Dream Team */}
           <li className="border-t border-zinc-800 pt-4">
             <Link 
               href="/favoritos" 
@@ -26,7 +57,7 @@ export default function PilotosLayout({ children }) {
         </ul>
       </aside>
 
-      {/* Aqui renderiza /pilotos y descendentes*/}
+      {/* Renderiza /pilotos y descendientes */}
       <section className="flex-1 bg-black">
         {children}
       </section>

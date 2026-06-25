@@ -69,17 +69,6 @@ export default function LeyendasPage() {
           </div>
         ))}
       </div>
-
-      {/* BOTON DE VOLVER */}
-      <div className="mt-16 text-center">
-        <Link 
-          href="/pilotos" 
-          className="group relative inline-flex items-center gap-3 text-zinc-500 hover:text-red-600 transition-colors font-bold uppercase tracking-widest text-xs"
-        >
-          <span className="h-px w-8 bg-zinc-800 group-hover:bg-red-600 transition-colors"></span>
-          Volver a la Grilla Actual
-        </Link>
-      </div>
     </div>
   );
 }
